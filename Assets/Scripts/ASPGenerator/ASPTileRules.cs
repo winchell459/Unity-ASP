@@ -22,12 +22,47 @@ public class ASPTileRules : ScriptableObject
         empty
     }
 
+    protected virtual string getCenterTileType()
+    {
+        return "empty";
+    }
+
+    protected virtual string getNeighborTileType()
+    {
+        return "filled";
+    }
+
     public virtual string GetTileRules()
     {
         string tile_rules = "";
         //generate tiles rules here
+        List<bool[]> missingRules = getMissingTiles(Tiles);
+
+        Debug.Log("missingRules.Count: " + missingRules.Count);
+        
+
+        foreach (bool[] missingTile in missingRules)
+        {
+            tile_rules += $@"
+                :- tile(XX,YY,{getCenterTileType()}),
+                {getNot(missingTile[0])} tile(XX-1, YY+1, {getNeighborTileType()}),
+                {getNot(missingTile[1])} tile(XX, YY+1, {getNeighborTileType()}),
+                {getNot(missingTile[2])} tile(XX+1, YY+1, {getNeighborTileType()}),
+                {getNot(missingTile[3])} tile(XX-1, YY, {getNeighborTileType()}),
+                {getNot(missingTile[4])} tile(XX+1, YY, {getNeighborTileType()}),
+                {getNot(missingTile[5])} tile(XX-1, YY-1, {getNeighborTileType()}),
+                {getNot(missingTile[6])} tile(XX, YY-1, {getNeighborTileType()}),
+                {getNot(missingTile[7])} tile(XX+1, YY-1, {getNeighborTileType()}).
+                
+            ";
+        }
 
         return tile_rules;
+    }
+    string getNot(bool isEmpty)
+    {
+        if (isEmpty) return "not";
+        else return "";
     }
 
     protected List<bool[]> getMissingTiles(ASPTile[] tileRules)

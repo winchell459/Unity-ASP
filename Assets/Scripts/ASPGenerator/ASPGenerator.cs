@@ -7,9 +7,9 @@ public class ASPGenerator : MonoBehaviour
     public Clingo.ClingoSolver Solver;
     [SerializeField] protected ASPMap map;
     [SerializeField] protected MapKey mapKey;
-    private bool waitingOnClingo;
+    protected bool waitingOnClingo;
 
-    [SerializeField] protected ASPTileRules tileRules;
+    
 
     private void Start()
     {
@@ -50,12 +50,16 @@ public class ASPGenerator : MonoBehaviour
 
     void startJob()
     {
-        string filename = Clingo.ClingoUtil.CreateFile(aspCode + tileRules.GetTileRules());
+        string filename = Clingo.ClingoUtil.CreateFile(aspCode);
         Solver.Solve(filename);
         waitingOnClingo = true;
     }
 
-    string aspCode = @"
+    protected string aspCode { get { return getASPCode(); } }
+
+    protected virtual string getASPCode()
+    {
+        string aspCode = @"
 
         
         #const max_width = 8.
@@ -78,6 +82,8 @@ public class ASPGenerator : MonoBehaviour
 
 
     ";
+        return aspCode;
+    }
 
     virtual protected void initializeGenerator()
     {
