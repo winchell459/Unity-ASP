@@ -9,6 +9,7 @@ public class ASPGenerator : MonoBehaviour
     [SerializeField] protected MapKey mapKey;
     protected bool waitingOnClingo;
 
+    [SerializeField] int cpus = 4;
     
 
     private void Start()
@@ -100,6 +101,11 @@ public class ASPGenerator : MonoBehaviour
     virtual protected void finalizeGenerator()
     {
         
+    }
+
+    virtual protected string getAdditionalParameters()
+    {
+        return $" --parallel-mode {cpus} ";
     }
 
     virtual protected void SATISFIABLE()

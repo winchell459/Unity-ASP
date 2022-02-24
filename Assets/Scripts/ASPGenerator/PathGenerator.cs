@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PathGenerator : ASPGenerator
 {
-    
+    [SerializeField] int boardWidth = 10, boardHeight = 10;
+    [SerializeField] ASPTileRules terrainTiles;
 
     public enum tile_types
     {
@@ -13,13 +14,13 @@ public class PathGenerator : ASPGenerator
     }
     protected override string getASPCode()
     {
-        return fieldrules + pathRules;
+        return fieldrules + pathRules + pathDebugRules + terrainTiles.GetTileRules();
     }
 
     string fieldrules = $@"
 
-        #const max_width = 40.
-        #const max_height = 40.
+        #const max_width = 10.
+        #const max_height = 10.
 
         width(1..max_width).
         height(1..max_height).
@@ -50,20 +51,24 @@ public class PathGenerator : ASPGenerator
 
     ";
 
-    string getFiller()
-    {
-        string filler = "";
-        for(int i = 0; i < 9000; i += 1)
-        {
-            filler += " %%%%% \n";
-        }
-        return filler;
-    }
+    string pathDebugRules = $@"
+
+        :- end(XX,_), not XX == max_width - 1.
+        :- start(XX,_), not XX == 2.
+
+    ";
+
+    
 
     protected override void startGenerator()
     {
         string filename = Clingo.ClingoUtil.CreateFile(aspCode);
-        Solver.Solve(filename);
+        Solver.Solve(filename, getAdditionalParameters());
         waitingOnClingo = true;
+    }
+
+    protected override string getAdditionalParameters()
+    {
+        return $"-c max_width={boardWidth} -c max_height={boardHeight} " + base.getAdditionalParameters();
     }
 }
