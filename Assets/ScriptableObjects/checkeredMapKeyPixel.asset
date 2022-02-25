@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 345c011c14809024fb471708112f7dee, type: 3}
-  m_Name: checkardMapKeyPixel
+  m_Name: checkeredMapKeyPixel
   m_EditorClassIdentifier: 
   widthKey: width
   heightKey: height
@@ -21,6 +21,6 @@ MonoBehaviour:
   colorDict:
     mapObjects:
     - key: black
-      obj: {r: 0, g: 0, b: 0, a: 0.5019608}
+      obj: {r: 0, g: 0, b: 0, a: 1}
     - key: white
-      obj: {r: 1, g: 1, b: 1, a: 0.5019608}
+      obj: {r: 1, g: 1, b: 1, a: 1}
