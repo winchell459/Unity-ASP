@@ -53,9 +53,10 @@ public class PathGenerator : ASPGenerator
 
     string pathDebugRules = $@"
 
-        :- end(XX,_), not XX == max_width - 1.
-        :- start(XX,_), not XX == 2.
-
+        :- end(XX,_), not XX == max_width.
+        :- start(XX,_), not XX == 1.
+        :- end(_,YY), YY == max_height.
+        :- end(_,YY), YY == 1.
     ";
 
     
