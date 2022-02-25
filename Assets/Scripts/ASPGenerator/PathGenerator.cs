@@ -55,8 +55,41 @@ public class PathGenerator : ASPGenerator
 
         :- end(XX,_), not XX == max_width.
         :- start(XX,_), not XX == 1.
-        :- end(_,YY), YY == max_height.
-        :- end(_,YY), YY == 1.
+        %:- end(_,YY), not YY == max_height.
+        %:- start(_,YY), not YY == 1.
+
+        
+
+        :- tile(XX,YY,{tile_types.empty}), not path(XX,YY).
+        :- Count = {{tile(_,_,Type)}}, tile_type(Type), Count == 0.
+
+        checkard_tiles(white; black).
+        :- Count = {{checkard(_,_,Type)}}, checkard_tiles(Type), Count == 0.
+
+        checkard(XX,YY,white) :- tile(XX,YY,{tile_types.filled}), XX == YY.
+        checkard(XX,YY,black) :- tile(XX,YY,{tile_types.filled}), XX == YY + 1.
+
+        checkard(XX,YY,white) :- tile(XX,YY,{tile_types.filled}), checkard(XX,YY + J, white), J = 2*(1..max_height).
+        checkard(XX,YY,white) :- tile(XX,YY,{tile_types.filled}), checkard(XX + I,YY, white), I = 2*(1..max_width).
+        checkard(XX,YY,white) :- tile(XX,YY,{tile_types.filled}), checkard(XX,YY - J, white), J = 2*(1..max_height).
+        checkard(XX,YY,white) :- tile(XX,YY,{tile_types.filled}), checkard(XX - I,YY, white), I = 2*(1..max_width).
+
+        checkard(XX,YY,white) :- tile(XX,YY,{tile_types.filled}), checkard(XX - D,YY - D, white), D = (1..max_width).
+        checkard(XX,YY,white) :- tile(XX,YY,{tile_types.filled}), checkard(XX + D,YY - D, white), D = (1..max_width).
+        checkard(XX,YY,white) :- tile(XX,YY,{tile_types.filled}), checkard(XX + D,YY + D, white), D = (1..max_width).
+        checkard(XX,YY,white) :- tile(XX,YY,{tile_types.filled}), checkard(XX - D,YY + D, white), D = (1..max_width).
+
+        checkard(XX,YY,black) :- tile(XX,YY,{tile_types.filled}), checkard(XX,YY + J, black), J = 2*(1..max_height).
+        checkard(XX,YY,black) :- tile(XX,YY,{tile_types.filled}), checkard(XX + I,YY, black), I = 2*(1..max_width).
+        checkard(XX,YY,black) :- tile(XX,YY,{tile_types.filled}), checkard(XX,YY - J, black), J = 2*(1..max_height).
+        checkard(XX,YY,black) :- tile(XX,YY,{tile_types.filled}), checkard(XX - I,YY, black), I = 2*(1..max_width).
+
+        checkard(XX,YY,black) :- tile(XX,YY,{tile_types.filled}), checkard(XX - D,YY - D, black), D = (1..max_width).
+        checkard(XX,YY,black) :- tile(XX,YY,{tile_types.filled}), checkard(XX + D,YY - D, black), D = (1..max_width).
+        checkard(XX,YY,black) :- tile(XX,YY,{tile_types.filled}), checkard(XX + D,YY + D, black), D = (1..max_width).
+        checkard(XX,YY,black) :- tile(XX,YY,{tile_types.filled}), checkard(XX - D,YY + D, black), D = (1..max_width).
+
+        %:- Count = {{checkard(_,_,_)}}, Count < 64.
     ";
 
     
