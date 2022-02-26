@@ -13,7 +13,7 @@ public class PathGenerator : ASPGenerator
     }
     protected override string getASPCode()
     {
-        return fieldrules + pathRules;
+        return fieldrules + pathRules + ((MapKeyTileRule)mapKey).dict["empty"].GetTileRules();
     }
 
     string fieldrules = $@"
@@ -50,15 +50,7 @@ public class PathGenerator : ASPGenerator
 
     ";
 
-    string getFiller()
-    {
-        string filler = "";
-        for(int i = 0; i < 9000; i += 1)
-        {
-            filler += " %%%%% \n";
-        }
-        return filler;
-    }
+   
 
     protected override void startGenerator()
     {
