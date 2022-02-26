@@ -5,6 +5,7 @@ using UnityEngine;
 public class ASPGenerator : MonoBehaviour
 {
     public Clingo.ClingoSolver Solver;
+    [SerializeField] protected int cpus = 1;
     [SerializeField] protected ASPMap map;
     [SerializeField] protected MapKey mapKey;
     protected bool waitingOnClingo;
@@ -100,6 +101,11 @@ public class ASPGenerator : MonoBehaviour
     virtual protected void finalizeGenerator()
     {
         
+    }
+
+    virtual protected string getAdditionalParameters()
+    {
+        return $" --parallel-mode {cpus}";
     }
 
     virtual protected void SATISFIABLE()

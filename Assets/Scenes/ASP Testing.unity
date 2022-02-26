@@ -364,7 +364,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spritePrefab: {fileID: 1110397012}
   debugMap: {fileID: 397526083}
-  debugMapKeyPixel: {fileID: 11400000, guid: 12dc0d6dd7ab40146ab56c9aedba6a40, type: 2}
+  debugMapKeyPixel: {fileID: 11400000, guid: fac5637bddba558469edda22010dc7de, type: 2}
 --- !u!4 &1232173996
 Transform:
   m_ObjectHideFlags: 0
@@ -463,8 +463,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Solver: {fileID: 1609760428}
+  cpus: 4
   map: {fileID: 1232173995}
   mapKey: {fileID: 11400000, guid: abc652150d9e797438691dc493872a42, type: 2}
+  boardWidth: 8
+  boardHeight: 8
 --- !u!4 &2126736745
 Transform:
   m_ObjectHideFlags: 0

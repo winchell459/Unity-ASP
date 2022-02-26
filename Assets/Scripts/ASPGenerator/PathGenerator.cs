@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PathGenerator : ASPGenerator
 {
+    [SerializeField] int boardWidth = 10, boardHeight = 10;
     
 
     public enum tile_types
@@ -13,7 +14,7 @@ public class PathGenerator : ASPGenerator
     }
     protected override string getASPCode()
     {
-        return fieldrules + pathRules + ((MapKeyTileRule)mapKey).dict["empty"].GetTileRules();
+        return fieldrules + pathRules + ((MapKeyTileRule)mapKey).dict["empty"].GetTileRules() + checkeredRules;
     }
 
     string fieldrules = $@"
@@ -29,7 +30,12 @@ public class PathGenerator : ASPGenerator
         1{{tile(XX, YY, Type): tile_type(Type)}}1 :- width(XX), height(YY).
 
 ";
-    string pathRules = $@"
+    string pathRules { get { return generatePathRules(); } }
+
+    string generatePathRules()
+    {
+
+        string aspCode = $@"
 
         1{{start(XX,YY): tile(XX,YY,{tile_types.empty})}}1.
         1{{end(XX,YY): tile(XX,YY,{tile_types.empty})}}1.
@@ -46,16 +52,54 @@ public class PathGenerator : ASPGenerator
         :- end(XX,YY), not path(XX,YY).
 
 
+        
 
+        ";
+        bool degugging = true;
+        string aspCodeDebug = $@"
+            :- start(XX,_), XX != max_width.
+            :- end(XX,_), XX != 1.
 
-    ";
+            :- start(_,YY), YY != max_height-1.
+            :- end(_,YY), YY != 2.
+        ";
 
+        return aspCode + (degugging? aspCodeDebug:"");
+    }
+
+    string checkeredRules { get { return generateCheckeredRules(boardWidth,boardHeight); } }
+
+    string generateCheckeredRules(int boardWidth, int boardHeight)
+    {
+        string aspCode = $@"
+            
+        ";
+        for(int y = 1; y <= boardHeight; y += 1)
+        {
+            for(int x = 1; x <= boardWidth; x += 1)
+            {
+                string tileColor = "white";
+                if(Mathf.Abs(x-y)%2 == 1)
+                {
+                    tileColor = "black";
+                }
+                aspCode += $" checkered({x},{y},{tileColor}) :- tile({x},{y},{tile_types.filled}).\n";
+            }
+        }
+
+        return aspCode;
+    }
    
 
     protected override void startGenerator()
     {
         string filename = Clingo.ClingoUtil.CreateFile(aspCode);
-        Solver.Solve(filename);
+        Solver.Solve(filename, getAdditionalParameters());
         waitingOnClingo = true;
+    }
+
+    protected override string getAdditionalParameters()
+    {
+        return $" -c max_width={boardWidth} -c max_height={boardHeight} " + base.getAdditionalParameters();
     }
 }
