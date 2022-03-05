@@ -9,18 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e9d50842b7dbb340a5e3d87ed04c217, type: 3}
-  m_Name: pipo-map MapKeyTileRule
+  m_Script: {fileID: 11500000, guid: 345c011c14809024fb471708112f7dee, type: 3}
+  m_Name: checkeredPixelMapKey
   m_EditorClassIdentifier: 
   widthKey: width
   heightKey: height
-  typeKey: tile
+  typeKey: checkered
   xIndex: 0
   yIndex: 1
   typeIndex: 2
-  dict:
+  colorDict:
     mapObjects:
-    - key: empty
-      obj: {fileID: 11400000, guid: cd8b6cf28ca38484cb26facb4674e95b, type: 2}
-    - key: filled
-      obj: {fileID: 11400000, guid: d4e8361bc2a49a74595cbf11b762e9f9, type: 2}
+    - key: black
+      obj: {r: 0, g: 0, b: 0, a: 1}
+    - key: white
+      obj: {r: 1, g: 1, b: 1, a: 1}

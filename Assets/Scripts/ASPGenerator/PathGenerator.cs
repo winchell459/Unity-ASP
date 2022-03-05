@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PathGenerator : ASPGenerator
 {
-    
+    [SerializeField] int boardWidth = 10, boardHeight = 10;
 
     public enum tile_types
     {
@@ -13,7 +13,7 @@ public class PathGenerator : ASPGenerator
     }
     protected override string getASPCode()
     {
-        return fieldrules + pathRules + ((MapKeyTileRule)mapKey).dict["empty"].GetTileRules();
+        return fieldrules + pathRules + ((MapKeyTileRule)mapKey).dict["empty"].GetTileRules() + checkeredRules;
     }
 
     string fieldrules = $@"
@@ -50,7 +50,25 @@ public class PathGenerator : ASPGenerator
 
     ";
 
+    string checkeredRules { get { return generateCheckeredRules(boardWidth, boardHeight); } }
    
+    string generateCheckeredRules(int boardWidth, int boardHeight)
+    {
+        string aspCode = $@"
+
+        ";
+        for(int y = 1; y <= boardHeight; y += 1)
+        {
+            for(int x = 1; x <= boardWidth; x += 1)
+            {
+                string tileColor = "white";
+                if (Mathf.Abs(x - y) % 2 == 0) tileColor = "black";
+                aspCode += $" checkered({x},{y},{tileColor}) :- tile({x},{y},{tile_types.filled}).\n";
+            }
+        }
+
+        return aspCode;
+    }
 
     protected override void startGenerator()
     {

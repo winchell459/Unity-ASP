@@ -41,7 +41,7 @@ public class ASPTileRules : ScriptableObject
         List<bool[]> missingRules = getMissingTiles(Tiles);
 
         Debug.Log("missingRules.Count: " + missingRules.Count);
-
+        
 
         foreach (bool[] missingTile in missingRules)
         {
@@ -70,11 +70,11 @@ public class ASPTileRules : ScriptableObject
     protected List<bool[]> getMissingTiles(ASPTile[] tileRules)
     {
         List<bool[]> missingTiles = new List<bool[]>();
-        for (int i = 0; i < 256; i += 1)
+        for(int i = 0; i < 256; i += 1)
         {
             bool[] permutation = new bool[8];
             int num = i;
-            for (int j = 7; j >= 0; j -= 1)
+            for(int j = 7; j >= 0; j -= 1)
             {
                 int placeValue = num / (int)Mathf.Pow(2, j);
                 if (placeValue == 1) permutation[j] = true;
@@ -82,10 +82,10 @@ public class ASPTileRules : ScriptableObject
             }
 
             bool missing = true;
-            foreach (ASPTile tileRule in tileRules)
+            foreach(ASPTile tileRule in tileRules)
             {
                 bool found = true;
-                for (int j = 0; j < 8; j += 1)
+                for(int j = 0; j < 8; j += 1)
                 {
                     if (tileRule.neighbors[j] != States.either && permutation[j] != (tileRule.neighbors[j] == neighborTile)) found = false;
                 }
@@ -130,9 +130,9 @@ public class ASPTileRules : ScriptableObject
         int h = pos.y;
         int w = pos.x;
 
-        int width = map.GetUpperBound(1) + 1;
-        int height = map.GetUpperBound(0) + 1;
-        Debug.Log($"height: {height} | width: {width}");
+        int width = map.GetUpperBound(0) + 1;
+        int height = map.GetUpperBound(1) + 1;
+        //Debug.Log($"height: {height} | width: {width}");
         //neighbors[0]
         if (h == height - 1 && w == 0) neighbors[0] = map[w, h] == falseTileType ? false : true;
         else if (h == height - 1) neighbors[0] = map[w - 1, h] == falseTileType ? false : true;
