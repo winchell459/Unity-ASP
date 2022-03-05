@@ -466,8 +466,8 @@ MonoBehaviour:
   cpus: 4
   map: {fileID: 1232173995}
   mapKey: {fileID: 11400000, guid: abc652150d9e797438691dc493872a42, type: 2}
-  boardWidth: 8
-  boardHeight: 8
+  boardWidth: 20
+  boardHeight: 20
 --- !u!4 &2126736745
 Transform:
   m_ObjectHideFlags: 0
