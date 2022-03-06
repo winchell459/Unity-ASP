@@ -74,6 +74,7 @@ public class PathGenerator : ASPGenerator
         string aspCode = $@"
             
         ";
+
         for(int y = 1; y <= boardHeight; y += 1)
         {
             for(int x = 1; x <= boardWidth; x += 1)
@@ -83,13 +84,31 @@ public class PathGenerator : ASPGenerator
                 {
                     tileColor = "black";
                 }
-                aspCode += $" checkered({x},{y},{tileColor}) :- tile({x},{y},{tile_types.filled}).\n";
+                aspCode += $" 0{{checkered({x},{y},{tileColor})}}1 :- tile({x},{y},{tile_types.filled}).\n";
             }
         }
 
+        return aspCode + piecePathRules;
+    }
+
+    string piecePathRules { get { return generatePiecePathRules(); } }
+   
+    string generatePiecePathRules()
+    {
+        string aspCode = $@"
+            
+            piece_path(XX,YY) :- piece_path(XX+1, YY), checkered(XX,YY,_).
+            piece_path(XX,YY) :- piece_path(XX-1, YY), checkered(XX,YY,_).
+            piece_path(XX,YY) :- piece_path(XX, YY+1), checkered(XX,YY,_).
+            piece_path(XX,YY) :- piece_path(XX, YY-1), checkered(XX,YY,_).
+
+            :- checkered(XX,YY,_), not piece_path(XX,YY).
+            
+            piece_path(1,1) :- checkered(1,1,_).
+        ";
+
         return aspCode;
     }
-   
 
     protected override void startGenerator()
     {
