@@ -111,6 +111,7 @@ public class ASPGenerator : MonoBehaviour
     virtual protected void SATISFIABLE()
     {
         map.DisplayMap(Solver.answerSet, mapKey);
+        map.AdjustCamera();
         Debug.LogWarning("SATISFIABLE unimplemented");
     }
 

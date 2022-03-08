@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb6b3f96eb9c63e46b2a2d59c2ebf2a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileSpacing: 1.1
   PixelPrefab: {fileID: 109472656693014930, guid: 71561304c201bc94ca59890c6d47a849, type: 3}
   PixelSpacing: 1
 --- !u!4 &397526084
@@ -362,6 +363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1501140a86f224d54b75e36e6273d0b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileSpacing: 1
   spritePrefab: {fileID: 1110397012}
   debugMap: {fileID: 397526083}
   debugMapKeyPixel: {fileID: 11400000, guid: fac5637bddba558469edda22010dc7de, type: 2}
@@ -468,6 +470,9 @@ MonoBehaviour:
   mapKey: {fileID: 11400000, guid: abc652150d9e797438691dc493872a42, type: 2}
   boardWidth: 20
   boardHeight: 20
+  pieces:
+  - {fileID: 11400000, guid: f82d1f3db73273f458f5f00af31b65eb, type: 2}
+  - {fileID: 11400000, guid: 0a790a205ed8f1346aff9930c23798c9, type: 2}
 --- !u!4 &2126736745
 Transform:
   m_ObjectHideFlags: 0

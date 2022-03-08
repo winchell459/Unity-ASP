@@ -8,10 +8,10 @@ public class MapTileRule : ASPMap
     [SerializeField] SpriteRenderer spritePrefab;
     [SerializeField] MapPixel debugMap;
     [SerializeField] MapKeyPixel debugMapKeyPixel;
-    public override void AdjustCamera()
-    {
-        throw new System.NotImplementedException();
-    }
+    //public override void AdjustCamera()
+    //{
+        
+    //}
 
     public override void DisplayMap(Dictionary<string, List<List<string>>> answerset, MapKey mapKey)
     {
@@ -59,6 +59,6 @@ public class MapTileRule : ASPMap
 
     }
 
-
+    
 
 }
