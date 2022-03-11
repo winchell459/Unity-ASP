@@ -13,21 +13,21 @@ MonoBehaviour:
   m_Name: kingWhite 1
   m_EditorClassIdentifier: 
   Name: king_white
-  Moves:
-  - dx: 1
-    dy: 0
+  moves:
   - dx: 0
     dy: 1
+  - dx: 1
+    dy: 0
   - dx: -1
     dy: 0
   - dx: 0
-    dy: -2
+    dy: -1
+  - dx: 0
+    dy: 2
+  - dx: 2
+    dy: 0
   - dx: 0
     dy: -2
-  - dx: 0
-    dy: -2
-  - dx: 0
-    dy: -2
-  - dx: 0
-    dy: -2
+  - dx: -2
+    dy: 0
   Start: {x: 2, y: 2}

@@ -6,11 +6,16 @@ using UnityEngine;
 public class ASPPiece : ScriptableObject
 {
     public string Name;
-    public Move[] Moves;
+    public Move[] Moves { get { return generateMoves(); } }
+    [SerializeField] Move[] moves;
     public Vector2Int Start;
     [System.Serializable]
     public struct Move
     {
         public int dx, dy;
+    }
+    protected virtual Move[] generateMoves()
+    {
+        return moves;
     }
 }
