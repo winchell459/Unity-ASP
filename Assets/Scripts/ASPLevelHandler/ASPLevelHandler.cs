@@ -2,17 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ASPLevelHandler : MonoBehaviour
+public abstract class ASPLevelHandler : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    virtual protected void initializeGenerator(ASPGenerator generator)
     {
-        
+        generator.InitializeGenerator(SATISFIABLE, UNSATISFIABLE, TIMEDOUT, ERROR);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    protected abstract void SATISFIABLE(Clingo.AnswerSet answerSet, string jobID);
+    protected abstract void UNSATISFIABLE(string jobID);
+    protected abstract void TIMEDOUT(int time, string jobID);
+    protected abstract void ERROR(string error, string jobID);
 }

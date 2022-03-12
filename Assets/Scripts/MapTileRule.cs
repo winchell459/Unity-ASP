@@ -6,26 +6,26 @@ public class MapTileRule : ASPMap
 {
     string[,] map;
     [SerializeField] SpriteRenderer spritePrefab;
-    [SerializeField] MapPixel debugMap;
-    [SerializeField] MapKeyPixel debugMapKeyPixel;
+    //[SerializeField] MapPixel debugMap;
+    //[SerializeField] MapKeyPixel debugMapKeyPixel;
     //public override void AdjustCamera()
     //{
         
     //}
 
-    public override void DisplayMap(Dictionary<string, List<List<string>>> answerset, MapKey mapKey)
+    public override void DisplayMap(Clingo.AnswerSet answerset, MapKey mapKey)
     {
         DisplayMap(answerset, mapKey.widthKey, mapKey.heightKey, mapKey.typeKey, mapKey.xIndex, mapKey.yIndex, mapKey.typeIndex, ((MapKeyTileRule)mapKey).dict);
-        debugMap.DisplayMap(answerset, debugMapKeyPixel);
+        //debugMap.DisplayMap(answerset, debugMapKeyPixel);
     }
 
-    public void DisplayMap(Dictionary<string, List<List<string>>> answerset, string widthKey, string heightKey, string tileKey, int xIndex, int yIndex, int pixelTypeIndex, MapObjectKey<ASPTileRules> dict)
+    public void DisplayMap(Clingo.AnswerSet answerset, string widthKey, string heightKey, string tileKey, int xIndex, int yIndex, int pixelTypeIndex, MapObjectKey<ASPTileRules> dict)
     {
-        foreach (List<string> widths in answerset[widthKey])
+        foreach (List<string> widths in answerset.Value[widthKey])
         {
             if (int.Parse(widths[0]) > width) width = int.Parse(widths[0]);
         }
-        foreach (List<string> h in answerset[heightKey])
+        foreach (List<string> h in answerset.Value[heightKey])
         {
             if (int.Parse(h[0]) > height) height = int.Parse(h[0]);
         }
@@ -33,7 +33,7 @@ public class MapTileRule : ASPMap
         map = new string[width, height];
         //map = new string[width, height];
 
-        foreach (List<string> pixelASP in answerset[tileKey])
+        foreach (List<string> pixelASP in answerset.Value[tileKey])
         {
             int x = int.Parse(pixelASP[xIndex]) - 1;
             int y = int.Parse(pixelASP[yIndex]) - 1;

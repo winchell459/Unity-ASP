@@ -26,7 +26,8 @@ namespace Clingo
         public int seed = 42;
         public bool useRandomSeed;
         public bool saveToFile = true;
-        public Dictionary<string, List<List<string>>> answerSet = new Dictionary<string, List<List<string>>>();
+        public Dictionary<string, List<List<string>>> answerSetDict = new Dictionary<string, List<List<string>>>();
+        public AnswerSet answerSet;
 
 
         // Read Only
@@ -98,11 +99,11 @@ namespace Clingo
         {
             StringBuilder sb = new StringBuilder();
 
-            List<string> keys = new List<string>(answerSet.Keys);
+            List<string> keys = new List<string>(answerSetDict.Keys);
             foreach (string key in keys)
             {
                 sb.Append(key + ": ");
-                foreach (List<string> l in answerSet[key])
+                foreach (List<string> l in answerSetDict[key])
                 {
                     sb.Append("[");
                     foreach (string s in l)
@@ -195,6 +196,7 @@ namespace Clingo
 
 
             ClingoRoot clingoOutput = JsonUtility.FromJson<ClingoRoot>(clingoConsoleOutput);
+            answerSet = AnswerSet.GetAnswerSet(clingoConsoleOutput);
 
             if (clingoOutput == null)
             {
@@ -228,25 +230,25 @@ namespace Clingo
                         if (start < 0 || end < 0)
                         {
                             string key = value;
-                            if (!answerSet.ContainsKey(key))
+                            if (!answerSetDict.ContainsKey(key))
                             {
-                                answerSet.Add(key, new List<List<string>>());
+                                answerSetDict.Add(key, new List<List<string>>());
                             }
 
-                            answerSet[key].Add(new List<string>(trueArray));
+                            answerSetDict[key].Add(new List<string>(trueArray));
                         }
                         else
                         {
                             string key = value.Substring(0, start);
                             string keyValue = value.Substring(start + 1, end - start - 1);
 
-                            if (!answerSet.ContainsKey(key))
+                            if (!answerSetDict.ContainsKey(key))
                             {
-                                answerSet.Add(key, new List<List<string>>());
+                                answerSetDict.Add(key, new List<List<string>>());
                             }
 
                             string[] body = keyValue.Split(',');
-                            answerSet[key].Add(new List<string>(body));
+                            answerSetDict[key].Add(new List<string>(body));
 
                         }
                     }
@@ -375,7 +377,7 @@ namespace Clingo
             clingoConsoleError = "";
             duration = 0;
             totalSolutionsFound = -1;
-            answerSet.Clear();
+            answerSetDict.Clear();
 
 
             status = Status.READY;

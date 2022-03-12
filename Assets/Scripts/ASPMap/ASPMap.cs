@@ -7,7 +7,7 @@ public abstract class ASPMap : MonoBehaviour
     protected int width, height;
     [SerializeField]protected float tileSpacing = 1.1f;
 
-    public abstract void DisplayMap(Dictionary<string, List<List<string>>> answerset, MapKey mapKey);
+    public abstract void DisplayMap(Clingo.AnswerSet answerset, MapKey mapKey);
     public virtual void AdjustCamera()
     {
         Camera cam = Camera.main;

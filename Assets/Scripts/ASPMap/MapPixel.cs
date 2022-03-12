@@ -9,24 +9,24 @@ public class MapPixel : ASPMap
 
     public float PixelSpacing = 1.1f;
 
-    override public void DisplayMap(Dictionary<string, List<List<string>>> answerset, MapKey mapKey)
+    override public void DisplayMap(Clingo.AnswerSet answerset, MapKey mapKey)
     {
         DisplayMap(answerset, mapKey.widthKey, mapKey.heightKey, mapKey.typeKey, mapKey.xIndex, mapKey.yIndex, mapKey.typeIndex, ((MapKeyPixel)mapKey).colorDict);
     }
-    public void DisplayMap(Dictionary<string, List<List<string>>> answerset, string widthKey, string heightKey, string pixelKey, int xIndex, int yIndex, int pixelTypeIndex, MapObjectKey<Color> colorDict)
+    public void DisplayMap(Clingo.AnswerSet answerset, string widthKey, string heightKey, string pixelKey, int xIndex, int yIndex, int pixelTypeIndex, MapObjectKey<Color> colorDict)
     {
-        foreach (List<string> widths in answerset[widthKey])
+        foreach (List<string> widths in answerset.Value[widthKey])
         {
             if (int.Parse(widths[0]) > width) width = int.Parse(widths[0]);
         }
-        foreach (List<string> h in answerset[heightKey])
+        foreach (List<string> h in answerset.Value[heightKey])
         {
             if (int.Parse(h[0]) > height) height = int.Parse(h[0]);
         }
 
         map = new Pixel[width, height];
 
-        foreach (List<string> pixelASP in answerset[pixelKey])
+        foreach (List<string> pixelASP in answerset.Value[pixelKey])
         {
             int x = int.Parse(pixelASP[xIndex]) - 1;
             int y = int.Parse(pixelASP[yIndex]) - 1;

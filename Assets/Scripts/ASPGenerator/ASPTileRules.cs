@@ -132,7 +132,7 @@ public class ASPTileRules : ScriptableObject
 
         int width = map.GetUpperBound(0) + 1;
         int height = map.GetUpperBound(1) + 1;
-        Debug.Log($"height: {height} | width: {width}");
+        //Debug.Log($"height: {height} | width: {width}");
         //neighbors[0]
         if (h == height - 1 && w == 0) neighbors[0] = map[w, h] == falseTileType ? false : true;
         else if (h == height - 1) neighbors[0] = map[w - 1, h] == falseTileType ? false : true;
